@@ -1,0 +1,2 @@
+idf_component_register(SRCS "local_server_ssl.c" "buttons.c" "query_decoder.c" "api.c" "main.c" "wifi.c" "local_server.c" "camera.c" "config.c" "wan_client.c"
+                    INCLUDE_DIRS ".")
