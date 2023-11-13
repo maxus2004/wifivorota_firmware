@@ -7,7 +7,7 @@
 
 static const char* TAG = "WiFIVorota-Config";
 
-char version[] = "1.0.3";
+char version[] = "1.0.4";
 char wifi_ssid[32] = "wifi";
 char wifi_password[64] = "password";
 char user_login[32] = "login";

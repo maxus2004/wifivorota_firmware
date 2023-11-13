@@ -80,7 +80,6 @@ void wifi_start()
             .password = "",
             .threshold.authmode = WIFI_AUTH_WPA2_PSK,
             .sae_pwe_h2e = WPA3_SAE_PWE_BOTH,
-            .sae_h2e_identifier = "",
         },
     };
     memcpy(wifi_config.sta.ssid,config_getWifiSsid(),32);

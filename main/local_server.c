@@ -21,38 +21,38 @@ static const char* TAG = "WiFIVorota-LocalServer";
 
 static void sendString(const int sock, const char* str) {
     char headers[1024];
-    sprintf(headers, "HTTP/1.0 200 OK\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: %i\r\n\r\n", strlen(str));
+    sprintf(headers, "HTTP/1.0 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: %i\r\n\r\n", strlen(str));
     send(sock, headers, strlen(headers), 0);
     send(sock, str, strlen(str), 0);
     shutdown(sock, 0);
     close(sock);
 }
 static void sendOK(const int sock) {
-    char response[] = "HTTP/1.0 200 OK\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     send(sock, response, strlen(response), 0);
     shutdown(sock, 0);
     close(sock);
 }
 static void sendUnauthorized(const int sock) {
-    char response[] = "HTTP/1.0 401 Unauthorized\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 401 Unauthorized\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     send(sock, response, strlen(response), 0);
     shutdown(sock, 0);
     close(sock);
 }
 static void sendBadRequest(const int sock) {
-    char response[] = "HTTP/1.0 400 Bad Request\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 400 Bad Request\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     send(sock, response, strlen(response), 0);
     shutdown(sock, 0);
     close(sock);
 }
 static void sendNotFound(const int sock) {
-    char response[] = "HTTP/1.0 404 Not Found\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 404 Not Found\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     send(sock, response, strlen(response), 0);
     shutdown(sock, 0);
     close(sock);
 }
 static void sendInternalError(const int sock) {
-    char response[] = "HTTP/1.0 500 Internal Server Error\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 500 Internal Server Error\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     send(sock, response, strlen(response), 0);
     shutdown(sock, 0);
     close(sock);

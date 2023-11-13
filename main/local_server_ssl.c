@@ -21,38 +21,38 @@ static const char* TAG = "WiFIVorota-LocalServerSsl";
 
 static void sendString(mbedtls_ssl_context* ssl, mbedtls_net_context* fd, const char* str) {
     char headers[1024];
-    sprintf(headers, "HTTP/1.0 200 OK\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: %i\r\n\r\n", strlen(str));
+    sprintf(headers, "HTTP/1.0 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: %i\r\n\r\n", strlen(str));
     mbedtls_ssl_write(ssl, (unsigned char*)headers, strlen(headers));
     mbedtls_ssl_write(ssl, (unsigned char*)str, strlen(str));
     mbedtls_net_free(fd);
     mbedtls_ssl_free(ssl);
 }
 static void sendOK(mbedtls_ssl_context* ssl, mbedtls_net_context* fd) {
-    char response[] = "HTTP/1.0 200 OK\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     mbedtls_ssl_write(ssl, (unsigned char*)response, strlen(response));
     mbedtls_net_free(fd);
     mbedtls_ssl_free(ssl);
 }
 static void sendUnauthorized(mbedtls_ssl_context* ssl, mbedtls_net_context* fd) {
-    char response[] = "HTTP/1.0 401 Unauthorized\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 401 Unauthorized\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     mbedtls_ssl_write(ssl, (unsigned char*)response, strlen(response));
     mbedtls_net_free(fd);
     mbedtls_ssl_free(ssl);
 }
 static void sendBadRequest(mbedtls_ssl_context* ssl, mbedtls_net_context* fd) {
-    char response[] = "HTTP/1.0 400 Bad Request\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 400 Bad Request\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     mbedtls_ssl_write(ssl, (unsigned char*)response, strlen(response));
     mbedtls_net_free(fd);
     mbedtls_ssl_free(ssl);
 }
 static void sendNotFound(mbedtls_ssl_context* ssl, mbedtls_net_context* fd) {
-    char response[] = "HTTP/1.0 404 Not Found\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 404 Not Found\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     mbedtls_ssl_write(ssl, (unsigned char*)response, strlen(response));
     mbedtls_net_free(fd);
     mbedtls_ssl_free(ssl);
 }
 static void sendInternalError(mbedtls_ssl_context* ssl, mbedtls_net_context* fd) {
-    char response[] = "HTTP/1.0 500 Internal Server Error\r\nContent-Length: 0\r\n\r\n";
+    char response[] = "HTTP/1.0 500 Internal Server Error\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Request-Private-Network: true\r\nContent-Length: 0\r\n\r\n";
     mbedtls_ssl_write(ssl, (unsigned char*)response, strlen(response));
     mbedtls_net_free(fd);
     mbedtls_ssl_free(ssl);
