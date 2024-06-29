@@ -4,6 +4,7 @@
 #include "config.h"
 #include "camera.h"
 #include "buttons.h"
+#include "wifi.h"
 #include <esp_log.h>
 #include <wan_client.h>
 #include <esp_http_client.h>
@@ -31,7 +32,7 @@ void api_process(query_t query, char* response) {
     char* cmd = queryStr(query, "cmd");
 
     if (strcmp(cmd, "info") == 0) {
-        sprintf(response, "result=OK&version=%s&login=%s", config_getVersion(), config_getUserLogin());
+        sprintf(response, "result=OK&version=%s&login=%s&rssi=%i", config_getVersion(), config_getUserLogin(), wifi_getRSSI());
     } else if (strcmp(cmd, "press_btn") == 0) {
         int btn_id = queryInt(query, "id");
         buttons_press(btn_id);

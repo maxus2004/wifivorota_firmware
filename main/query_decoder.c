@@ -49,7 +49,7 @@ char* queryStr(query_t query, const char* key) {
             return eq + 1;
         }
     }
-    return query.query[0] + strlen(query.query[0]);
+    return 0;
 }
 
 int queryInt(query_t query, const char* key) {
@@ -57,7 +57,7 @@ int queryInt(query_t query, const char* key) {
 }
 
 bool queryContains(query_t query, const char* key) {
-    return queryStr(query, key)[0] != '\0';
+    return queryStr(query, key) != 0;
 }
 
 query_t queryDecode(char* i) {

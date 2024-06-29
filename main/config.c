@@ -7,14 +7,14 @@
 
 static const char* TAG = "WiFIVorota-Config";
 
-char version[] = "1.0.5";
-char wifi_ssid[32] = "wifi";
+char version[] = "1.0.6";
+char wifi_ssid[32] = "ssid";
 char wifi_password[64] = "password";
 char user_login[32] = "login";
 char user_password[64] = "password";
 char hostname[] = "wifivorota";
 char button_names[4][32] = { "Открыть/Закрыть","","","" };
-uint8_t btn_invert = 0b1111;
+uint8_t btn_invert = 0b0000;
 
 void config_setWifiSsid(char* value) {
     strcpy(wifi_ssid, value);
