@@ -37,7 +37,7 @@ void press_task(void* pvParameters) {
 }
 
 bool led_status(){
-    return gpio_get_level(12);
+    return !gpio_get_level(12);
 }
 
 void buttons_press(int id) {
