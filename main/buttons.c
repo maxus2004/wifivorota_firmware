@@ -36,6 +36,10 @@ void press_task(void* pvParameters) {
     vTaskDelete(NULL);
 }
 
+bool led_status(){
+    return gpio_get_level(12);
+}
+
 void buttons_press(int id) {
     xTaskCreate(press_task, "btnPress_task", 2048, (void*)id, 5, NULL);
 }

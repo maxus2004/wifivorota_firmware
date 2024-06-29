@@ -32,7 +32,7 @@ void api_process(query_t query, char* response) {
     char* cmd = queryStr(query, "cmd");
 
     if (strcmp(cmd, "info") == 0) {
-        sprintf(response, "result=OK&version=%s&login=%s&rssi=%i", config_getVersion(), config_getUserLogin(), wifi_getRSSI());
+        sprintf(response, "result=OK&version=%s&login=%s&rssi=%i&led=%i", config_getVersion(), config_getUserLogin(), wifi_getRSSI(), led_status());
     } else if (strcmp(cmd, "press_btn") == 0) {
         int btn_id = queryInt(query, "id");
         buttons_press(btn_id);
