@@ -96,9 +96,11 @@ void wanClient_stream_task(void* pvParameters) {
     camera_fb_t* fb = 0;
     while (esp_websocket_client_is_connected(streamSocket)) {
         fb = esp_camera_fb_get();
-        int res = esp_websocket_client_send_bin(streamSocket, (const char *)(fb->buf), fb->len, portMAX_DELAY);
-        esp_camera_fb_return(fb);
-        if (res != fb->len)break;
+        if(fb){
+            int res = esp_websocket_client_send_bin(streamSocket, (const char *)(fb->buf), fb->len, portMAX_DELAY);
+            esp_camera_fb_return(fb);
+            if (res != fb->len)break;
+        }
     }
 
     esp_websocket_client_stop(streamSocket);
@@ -112,5 +114,5 @@ void wanClient_stream_task(void* pvParameters) {
 void wanClient_startStream() {
     if(wanStream_started)return;
     wanStream_started = true;
-    xTaskCreate(wanClient_stream_task, "wan_stream", 4096, NULL, 5, NULL);
+    xTaskCreate(wanClient_stream_task, "wan_stream", 8192, NULL, 5, NULL);
 }
