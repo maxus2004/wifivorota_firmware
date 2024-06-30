@@ -32,10 +32,20 @@ void api_process(query_t query, char* response) {
     char* cmd = queryStr(query, "cmd");
 
     if (strcmp(cmd, "info") == 0) {
-        sprintf(response, "result=OK&version=%s&login=%s&rssi=%i&led=%i&free_ram_internal=%i&free_ram_spi=%i&", config_getVersion(), config_getUserLogin(), wifi_getRSSI(), led_status(), heap_caps_get_free_size(MALLOC_CAP_INTERNAL), heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+        sprintf(response, "result=OK&version=%s&login=%s&rssi=%i&led=%i&free_ram_internal=%i&free_ram_spi=%i", config_getVersion(), config_getUserLogin(), wifi_getRSSI(), led_status(), heap_caps_get_free_size(MALLOC_CAP_INTERNAL), heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+    } else if (strcmp(cmd, "led_status") == 0) {
+        sprintf(response, "result=OK&led=%i", led_status());
     } else if (strcmp(cmd, "press_btn") == 0) {
         int btn_id = queryInt(query, "id");
         buttons_press(btn_id);
+        sprintf(response, "result=OK");
+    } else if (strcmp(cmd, "hold_btn") == 0) {
+        int btn_id = queryInt(query, "id");
+        buttons_hold(btn_id);
+        sprintf(response, "result=OK");
+    } else if (strcmp(cmd, "release_btn") == 0) {
+        int btn_id = queryInt(query, "id");
+        buttons_release(btn_id);
         sprintf(response, "result=OK");
     } else if (strcmp(cmd, "camera_config") == 0) {
         if (queryContains(query, "xclk")) {

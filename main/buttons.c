@@ -43,3 +43,19 @@ bool led_status(){
 void buttons_press(int id) {
     xTaskCreate(press_task, "btnPress_task", 2048, (void*)id, 5, NULL);
 }
+
+void buttons_hold(int id) {
+    ESP_LOGI(TAG, "holding button");
+    if (id < 0 || id > 3)return;
+    int pin = id + 12;
+    if (id == 0)pin = 4;
+    gpio_set_level(pin, config_getBtnInvert(id));
+}
+
+void buttons_release(int id) {
+    ESP_LOGI(TAG, "releasing button");
+    if (id < 0 || id > 3)return;
+    int pin = id + 12;
+    if (id == 0)pin = 4;
+    gpio_set_level(pin, !config_getBtnInvert(id));
+}
