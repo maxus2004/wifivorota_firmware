@@ -9,12 +9,14 @@
 #include "camera.h"
 #include "config.h"
 #include "buttons.h"
+#include "uart_cli.h"
 
 void app_main(void)
 {
     buttons_init();
     ESP_ERROR_CHECK(nvs_flash_init());
     config_load();
+    uart_cli_start();
     camera_start();
     wifi_start();
     wanClient_start();

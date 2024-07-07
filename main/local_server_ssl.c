@@ -134,7 +134,7 @@ static void handle_request(mbedtls_ssl_context* ssl, mbedtls_net_context* fd) {
 
     if (strcmp(path, "/api") == 0) {
         char response[256];
-        api_process(query, response);
+        api_process(query, response, true);
         ESP_LOGI(TAG, "API response: %s", response);
         sendString(ssl, fd, response);
     } else if (strcmp(path, "/stream") == 0) {

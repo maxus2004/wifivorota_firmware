@@ -19,14 +19,16 @@ static void reboot_task(void* pvParameters) {
     esp_restart();
 }
 
-void api_process(query_t query, char* response) {
+void api_process(query_t query, char* response,bool checkAuth) {
     ESP_LOGI(TAG, "api cmd: %s", queryStr(query, "cmd"));
-    char* login = queryStr(query, "login");
-    char* password = queryStr(query, "password");
-    if (strcmp(login, config_getUserLogin()) != 0 || strcmp(password, config_getUserPassword()) != 0) {
-        sprintf(response, "result=UNAUTHORIZED");
-        ESP_LOGI(TAG, "unauthorized");
-        return;
+    if(checkAuth){
+        char* login = queryStr(query, "login");
+        char* password = queryStr(query, "password");
+        if (strcmp(login, config_getUserLogin()) != 0 || strcmp(password, config_getUserPassword()) != 0) {
+            sprintf(response, "result=UNAUTHORIZED");
+            ESP_LOGI(TAG, "unauthorized");
+            return;
+        }
     }
 
     char* cmd = queryStr(query, "cmd");

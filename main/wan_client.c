@@ -42,7 +42,7 @@ static void controlSocket_event_handler(void* handler_args, esp_event_base_t bas
             break;
         }
         query_t query = queryDecode(query_start);
-        api_process(query, response);
+        api_process(query, response, true);
         esp_websocket_client_send_text(controlSocket, response, strlen(response), portMAX_DELAY);
 
         break;

@@ -126,7 +126,7 @@ static void handle_request(const int sock) {
 
     if (strcmp(path, "/api") == 0) {
         char response[256];
-        api_process(query, response);
+        api_process(query, response, true);
         ESP_LOGI(TAG, "API response: %s", response);
         sendString(sock, response);
     } else if (strcmp(path, "/stream") == 0) {
