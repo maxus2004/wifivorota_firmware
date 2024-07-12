@@ -54,7 +54,7 @@ static void controlSocket_event_handler(void* handler_args, esp_event_base_t bas
 
 void wanClient_restart(){
     esp_websocket_client_close(controlSocket,portMAX_DELAY);
-    sprintf(apiURI, "wss://vorota.servermaksa.ru/api/?login=%s&version=%s",config_getUserLogin(),config_getVersion());
+    sprintf(apiURI, "wss://wifi-vorota.ru/api/?login=%s&version=%s",config_getUserLogin(),config_getVersion());
     esp_websocket_client_config_t controlSocket_cfg = {
         .uri = apiURI,
     };
@@ -64,7 +64,7 @@ void wanClient_restart(){
 }
 
 void wanClient_start() {
-    sprintf(apiURI, "wss://vorota.servermaksa.ru/api/?login=%s&version=%s",config_getUserLogin(),config_getVersion());
+    sprintf(apiURI, "wss://wifi-vorota.ru/api/?login=%s&version=%s",config_getUserLogin(),config_getVersion());
     esp_websocket_client_config_t controlSocket_cfg = {
         .uri = apiURI,
     };
@@ -74,7 +74,7 @@ void wanClient_start() {
 }
 
 void wanClient_stream_task(void* pvParameters) {
-    sprintf(streamURI, "wss://vorota.servermaksa.ru/stream/?login=%s&version=%s",config_getUserLogin(),config_getVersion());
+    sprintf(streamURI, "wss://wifi-vorota.ru/stream/?login=%s&version=%s",config_getUserLogin(),config_getVersion());
     esp_websocket_client_config_t streamSocket_cfg = {
         .uri = streamURI,
         .disable_auto_reconnect = true
