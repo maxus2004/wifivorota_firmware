@@ -13,10 +13,10 @@ void buttons_init() {
     esp_rom_gpio_pad_select_gpio(13);
     esp_rom_gpio_pad_select_gpio(14);
     esp_rom_gpio_pad_select_gpio(15);
-    gpio_set_level(4, !config_getBtnInvert(0));
-    gpio_set_level(13, !config_getBtnInvert(1));
-    gpio_set_level(14, !config_getBtnInvert(2));
-    gpio_set_level(15, !config_getBtnInvert(3));
+    gpio_set_level(4, 1);
+    gpio_set_level(13, 1);
+    gpio_set_level(14, 1);
+    gpio_set_level(15, 1);
     gpio_set_direction(4, GPIO_MODE_OUTPUT);
     gpio_set_direction(13, GPIO_MODE_OUTPUT);
     gpio_set_direction(14, GPIO_MODE_OUTPUT);
@@ -29,9 +29,9 @@ void press_task(void* pvParameters) {
     if (id < 0 || id > 3)return;
     int pin = id + 12;
     if (id == 0)pin = 4;
-    gpio_set_level(pin, config_getBtnInvert(id));
+    gpio_set_level(pin, 0);
     vTaskDelay(pdMS_TO_TICKS(500));
-    gpio_set_level(pin, !config_getBtnInvert(id));
+    gpio_set_level(pin, 1);
     ESP_LOGI(TAG, "pressed button");
     vTaskDelete(NULL);
 }
@@ -49,7 +49,7 @@ void buttons_hold(int id) {
     if (id < 0 || id > 3)return;
     int pin = id + 12;
     if (id == 0)pin = 4;
-    gpio_set_level(pin, config_getBtnInvert(id));
+    gpio_set_level(pin, 0);
 }
 
 void buttons_release(int id) {
@@ -57,5 +57,5 @@ void buttons_release(int id) {
     if (id < 0 || id > 3)return;
     int pin = id + 12;
     if (id == 0)pin = 4;
-    gpio_set_level(pin, !config_getBtnInvert(id));
+    gpio_set_level(pin, 1);
 }

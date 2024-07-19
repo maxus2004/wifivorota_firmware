@@ -85,12 +85,15 @@ void api_process(query_t query, char* response,bool checkAuth) {
         if (queryContains(query, "btn3_name")) {
             config_setButton(3,queryStr(query, "btn3_name"));
         }
-        sprintf(response, "result=OK&wifi_ssid=%s&wifi_password=%s&user_login=%s&user_password=%s&btn0_name=%s&btn1_name=%s&btn2_name=%s&btn3_name=%s",
-            config_getWifiSsid(), config_getWifiPassword(), config_getUserLogin(), config_getUserPassword(), config_getButton(0), config_getButton(1), config_getButton(2), config_getButton(3));
+        if (queryContains(query, "camera_flip")) {
+            config_setCameraFlip(queryInt(query, "camera_flip"));
+        }
+        sprintf(response, "result=OK&wifi_ssid=%s&wifi_password=%s&user_login=%s&user_password=%s&btn0_name=%s&btn1_name=%s&btn2_name=%s&btn3_name=%s&camera_flip=%i",
+            config_getWifiSsid(), config_getWifiPassword(), config_getUserLogin(), config_getUserPassword(), config_getButton(0), config_getButton(1), config_getButton(2), config_getButton(3),config_getCameraFlip());
     } else if (strcmp(cmd, "config_save") == 0) {
         config_save();
-        sprintf(response, "result=OK&wifi_ssid=%s&wifi_password=%s&user_login=%s&user_password=%s&btn0_name=%s&btn1_name=%s&btn2_name=%s&btn3_name=%s",
-            config_getWifiSsid(), config_getWifiPassword(), config_getUserLogin(), config_getUserPassword(), config_getButton(0), config_getButton(1), config_getButton(2), config_getButton(3));
+        sprintf(response, "result=OK&wifi_ssid=%s&wifi_password=%s&user_login=%s&user_password=%s&btn0_name=%s&btn1_name=%s&btn2_name=%s&btn3_name=%s&camera_flip=%i",
+            config_getWifiSsid(), config_getWifiPassword(), config_getUserLogin(), config_getUserPassword(), config_getButton(0), config_getButton(1), config_getButton(2), config_getButton(3),config_getCameraFlip());
     } else if (strcmp(cmd, "wan_stream") == 0) {
         wanClient_startStream();
         sprintf(response, "result=OK");

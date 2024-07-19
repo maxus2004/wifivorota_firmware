@@ -14,7 +14,7 @@ char user_login[32] = "login";
 char user_password[64] = "password";
 char hostname[] = "wifivorota";
 char button_names[4][32] = { "Открыть/Закрыть","","","" };
-uint8_t btn_invert = 0b0000;
+bool camera_flip = false;
 
 void config_setWifiSsid(char* value) {
     strcpy(wifi_ssid, value);
@@ -31,6 +31,9 @@ void config_setUserPassword(char* value) {
 }
 void config_setButton(int id, char* value) {
     strcpy(button_names[id], value);
+}
+void config_setCameraFlip(bool value) {
+    camera_flip = value;
 }
 
 char* config_getWifiSsid() {
@@ -54,8 +57,8 @@ char* config_getButton(int id) {
 char* config_getVersion() {
     return version;
 }
-bool config_getBtnInvert(int id) {
-    return (btn_invert >> id) & 1;
+bool config_getCameraFlip() {
+    return camera_flip;
 }
 
 void config_save() {
@@ -68,7 +71,7 @@ void config_save() {
     nvs_set_blob(handle, "user_login", user_login, 32);
     nvs_set_blob(handle, "user_password", user_password, 64);
     nvs_set_blob(handle, "button_names", button_names, 32*4);
-    nvs_set_u8(handle, "btnInvert", btn_invert);
+    nvs_set_u8(handle, "camera_flip", camera_flip);
     nvs_commit(handle);
     nvs_close(handle);
 
@@ -79,7 +82,7 @@ void config_save() {
     ESP_LOGI(TAG, "user_password=%s", user_password);
     ESP_LOGI(TAG, "hostname=%s", hostname);
     ESP_LOGI(TAG, "button_names={\"%s\", \"%s\", \"%s\", \"%s\"}", button_names[0], button_names[1], button_names[2], button_names[3]);
-    ESP_LOGI(TAG, "btn_invert={%i, %i, %i, %i}", (btn_invert >> 0) & 1, (btn_invert >> 1) & 1, (btn_invert >> 2) & 1, (btn_invert >> 3) & 1);
+    ESP_LOGI(TAG, "camera_flip=%i", camera_flip);
 }
 void config_load() {
     ESP_LOGI(TAG, "loading config...");
@@ -96,7 +99,7 @@ void config_load() {
     nvs_get_blob(handle, "user_password", user_password, &len);
     len = 4*32;
     nvs_get_blob(handle, "button_names", button_names, &len);
-    nvs_get_u8(handle, "btnInvert", &btn_invert);
+    nvs_get_u8(handle, "camera_flip", &camera_flip);
     nvs_close(handle);
 
     ESP_LOGI(TAG, "loaded config");
@@ -106,5 +109,5 @@ void config_load() {
     ESP_LOGI(TAG, "user_password=%s", user_password);
     ESP_LOGI(TAG, "hostname=%s", hostname);
     ESP_LOGI(TAG, "button_names={\"%s\", \"%s\", \"%s\", \"%s\"}", button_names[0], button_names[1], button_names[2], button_names[3]);
-    ESP_LOGI(TAG, "btn_invert={%i, %i, %i, %i}", (btn_invert >> 0) & 1, (btn_invert >> 1) & 1, (btn_invert >> 2) & 1, (btn_invert >> 3) & 1);
+    ESP_LOGI(TAG, "camera_flip=%i", camera_flip);
 }
