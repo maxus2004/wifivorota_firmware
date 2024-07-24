@@ -88,6 +88,7 @@ bool buttons_prog(int id) {
         }
         uint32_t flashStart = millis();
         uint32_t flashInterval = millis() - lastFlash;
+        lastFlash = flashStart;
         while (led_status()) {
             vTaskDelay(1);
         }
