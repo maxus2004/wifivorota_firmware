@@ -49,7 +49,14 @@ void api_process(query_t query, char* response,bool checkAuth) {
         int btn_id = queryInt(query, "id");
         buttons_release(btn_id);
         sprintf(response, "result=OK");
-    } else if (strcmp(cmd, "camera_config") == 0) {
+    }  else if (strcmp(cmd, "prog_btn") == 0) {
+        int btn_id = queryInt(query, "id");
+        if(buttons_prog(btn_id)){
+            sprintf(response, "result=OK");
+        }else{
+            sprintf(response, "result=FAILED");
+        }
+    }else if (strcmp(cmd, "camera_config") == 0) {
         if (queryContains(query, "xclk")) {
             camera_setXclk(queryInt(query, "xclk"));
         }
