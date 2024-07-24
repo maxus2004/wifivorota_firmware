@@ -81,21 +81,22 @@ bool buttons_prog(int id) {
 
     status = WAITING_FOR_SIGNAL;
 
-    uint32_t lastFlash = millis();
+    uint32_t lastFlash = 0;
     while (status == WAITING_FOR_SIGNAL) {
-        while (!led_status() && millis() < lastFlash + 3000) {
+        while (!led_status() && (millis() < lastFlash + 3000 || lastFlash==0)) {
             vTaskDelay(1);
         }
         uint32_t flashStart = millis();
         uint32_t flashInterval = millis() - lastFlash;
-        lastFlash = flashStart;
         while (led_status()) {
             vTaskDelay(1);
         }
         uint32_t flashLength = millis() - flashStart;
 
-        if (flashInterval > 2700 || flashLength > 700) status = FAILED;
-        if (flashInterval < 500) status = WAITING_FOR_BUTTON;
+        if (lastFlash!=0 && (flashInterval > 2700 || flashLength > 700)) status = FAILED;
+        if (lastFlash!=0 && flashInterval < 500) status = WAITING_FOR_BUTTON;
+
+        lastFlash = flashStart;
     }
 
     if (status == FAILED) return false;
